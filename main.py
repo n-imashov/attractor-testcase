@@ -9,16 +9,10 @@ class CesarCipher(object):
         self._shift = value
 
     def encode(self, plainText):
-        encoded_text = ""
-        for char in plainText:
-            if char in self._alphabet:
-                char_index = self._alphabet.index(char)
-                new_index = (char_index + self._shift) % len(self._alphabet)
-                encoded_char = self._alphabet[new_index]
-                encoded_text += encoded_char
-            else:
-                encoded_text += char
-        return encoded_text
+        alphabet = self._alphabet
+        shifted_alphabet = alphabet[self._shift:] + alphabet[:self._shift]
+        translation = str.maketrans(alphabet, shifted_alphabet)
+        return plainText.translate(translation)
 
 
 cesar_cipher = CesarCipher()
